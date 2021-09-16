@@ -91,11 +91,13 @@ class Car {
   }
 
   drive(distance){
-    if (this.tank > 0){
+    let maxDistance = this.tank * this.milesPerGallon
+    if (distance <= maxDistance){
+    this.tank = this.tank - (distance / this.milesPerGallon);  
     this.odometer = this.odometer + distance;
-    this.tank = this.tank - (distance / this.milesPerGallon);
     } else {
-      this.odometer = this.odometer;
+      this.odometer = this.odometer + maxDistance;
+      this.tank = 0;
       return `I ran out of fuel at ${this.odometer} miles!`;
     }
   }
@@ -208,8 +210,20 @@ class Student extends Lambdasian {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-   
+class ProjectManager extends Instructor{
+   constructor (PMattr){
+     super(PMattr);
+     this.gradClassName = PMattr.gradClassName;
+     this.favInstructor = PMattr.favInstructor;
+   }
+
+   standUp (slack){
+     return `${this.name} announces to ${slack}, @channel standy times!`;
+   }
+
+   debugsCode(student, subject){
+     return `${this.name} debugs ${student.name}'s code on ${subject}`;
+   }
 }
 /*
   STRETCH PROBLEM (no tests!)
